@@ -15,8 +15,8 @@ while True:
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x, y, w, h) in faces:
-        cv.rectangle(frame, (x, y), (x+w, y+h), (39, 35, 145), 2)
-        # cv.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
+        # cv.rectangle(frame, (x, y), (x+w, y+h), (39, 35, 145), 2)
+        cv.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
         roi_gray = gray[y:y+h, x:x+w]
         roi_color = frame[y:y+h, x:x+w]
         
