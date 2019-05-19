@@ -1,11 +1,10 @@
 import os
 import cv2 as cv
 import time
+from facial.helpers import vision, config
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-face_cascade = cv.CascadeClassifier(os.path.join(cv.__path__[0], 'data', 'haarcascade_frontalface_alt2.xml'))
-eye_cascade = cv.CascadeClassifier(os.path.join(cv.__path__[0], 'data', 'haarcascade_eye.xml'))
-
+face_cascade = vision.load_cascade('haarcascade_frontalface_alt2.xml')
+eye_cascade = vision.load_cascade('haarcascade_eye.xml')
 camera = cv.VideoCapture(0)
 
 while True:
@@ -15,7 +14,6 @@ while True:
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x, y, w, h) in faces:
-        # cv.rectangle(frame, (x, y), (x+w, y+h), (39, 35, 145), 2)
         cv.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
         roi_gray = gray[y:y+h, x:x+w]
         roi_color = frame[y:y+h, x:x+w]
@@ -32,7 +30,7 @@ while True:
         ans = str(input('Do you want to save this? y/[n]: '))
         if ans.lower() == 'y':
             name = str(input('Enter your ID number:'))
-            file_path = os.path.join(BASE_DIR, 'images', name, file_name)
+            file_path = os.path.join(config.PROJECT_DIR, 'images', name, file_name)
             if not os.path.exists(os.path.dirname(file_path)):
                 os.mkdir(os.path.dirname(file_path))
             cv.imwrite(file_path, for_picture)
@@ -41,5 +39,6 @@ while True:
             continue
         else:
             break
+
 camera.release()
 cv.destroyAllWindows()
