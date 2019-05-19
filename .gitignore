@@ -217,8 +217,8 @@ dmypy.json
 # End of https://www.gitignore.io/api/python,pycharm+all
 
 #project-specific
-images/*
-training_result/*
+facial/images/*
+facial/training_result/*
 
-!images/.gitkeep
-!training_result/.gitkeep
+!facial/images/.gitkeep
+!facial/training_result/.gitkeep
