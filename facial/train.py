@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import LabelEncoder
-from facial.helpers import vision, training, config
+from helpers import vision, training, config
 
 
 face_cascade = vision.load_cascade('haarcascade_frontalface_alt2.xml')

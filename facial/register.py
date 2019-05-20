@@ -1,7 +1,7 @@
 import os
 import cv2 as cv
 import time
-from facial.helpers import vision, config
+from helpers import vision, config
 
 face_cascade = vision.load_cascade('haarcascade_frontalface_alt2.xml')
 eye_cascade = vision.load_cascade('haarcascade_eye.xml')

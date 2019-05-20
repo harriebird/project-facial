@@ -1,6 +1,6 @@
 import os
 import cv2 as cv
-from facial.helpers import vision, training, config
+from helpers import vision, training
 
 
 classifier = training.load('model.sav')
