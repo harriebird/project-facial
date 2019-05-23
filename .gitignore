@@ -219,6 +219,8 @@ dmypy.json
 #project-specific
 facial/images/*
 facial/training_result/*
+facial/logs/*
 
 !facial/images/.gitkeep
 !facial/training_result/.gitkeep
+!facial/logs/.gitkeep

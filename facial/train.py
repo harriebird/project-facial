@@ -1,4 +1,5 @@
 import os
+import time
 import cv2 as cv
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -8,13 +9,14 @@ from sklearn.preprocessing import LabelEncoder
 from helpers import vision, training, config
 
 
+log_file = open(os.path.join(config.PROJECT_DIR, 'logs', 'training.log'), '+a')
 face_cascade = vision.load_cascade('haarcascade_frontalface_alt2.xml')
 hog = vision.init_hog()
 
 training_data = []
 training_labels = []
 
-
+log_file.write('{}, {}\n'.format(time.strftime('%Y-%m-%d_%H:%M:%S'), 'training started'))
 for root, dirs, files in os.walk(os.path.join(config.PROJECT_DIR, 'images')):
     for file in files:
         if file.endswith('png') or file.endswith('jpg'):
@@ -28,7 +30,7 @@ for root, dirs, files in os.walk(os.path.join(config.PROJECT_DIR, 'images')):
             faces = face_cascade.detectMultiScale(image_array, 1.3, 5)
             for (x, y, w, h) in faces:
                 roi = image_array[y:y + h, x:x + w]
-                roi = cv.resize(roi, (50, 50), interpolation=cv.INTER_AREA)
+                roi = cv.resize(roi, config.win_size, interpolation=cv.INTER_AREA)
                 hog_data = hog.compute(roi).ravel()
                 training_data.append(hog_data)
                 training_labels.append(label)
@@ -45,9 +47,12 @@ x_train, x_test, y_train, y_test = train_test_split(training_data,
 classifier.fit(x_train, y_train)
 
 y_pred = classifier.predict(x_test)
-print('Accuracy:', accuracy_score(y_test, y_pred))
+print('Accuracy:', accuracy_score(y_test, y_pred)*100)
 
 training.dump(classifier, 'model.sav')
 training.dump(label_encoder, 'label.sav')
 
 print('Hell Yeah! Training was successfully done. :)')
+log_file.write('{}, {} (images: {} accuracy score: {}%)\n'.format(
+    time.strftime('%Y-%m-%d_%H:%M:%S'), 'training successful', len(training_data), accuracy_score(y_test, y_pred)*100))
+log_file.close()

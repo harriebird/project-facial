@@ -1,6 +1,6 @@
 import os
-import cv2 as cv
 import time
+import cv2 as cv
 from helpers import vision, config
 
 face_cascade = vision.load_cascade('haarcascade_frontalface_alt2.xml')
