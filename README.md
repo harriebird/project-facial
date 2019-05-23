@@ -23,5 +23,6 @@ Use of **virtual environment** is highly recommended. If want to learn how to us
 
 ## Using the project-facial
 * To capture and register faces using camera, run `python register.py`
+    * Hit `SPACE` to capture and supply the ID on the terminal where the script was executed
 * To start the training, run `python train.py`
 * To start the facial recognition, run `python recognition.py`
